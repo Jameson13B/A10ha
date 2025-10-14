@@ -8,7 +8,7 @@ const detectPackageManager = () => {
     if (fs.existsSync("yarn.lock")) return "yarn"
     return "npm"
   } catch (err) {
-    console.error("Error detecting package manager:", err.message)
+    console.error("Error detecting package manager:".red.bold, err.message)
     return "npm"
   }
 }
@@ -30,10 +30,15 @@ export const installPackages = (packages, isDev = false) => {
   }[packageManager]
 
   try {
-    console.log(`Installing ${packages.join(", ")} with ${packageManager}...`)
+    console.log(
+      `Installing ${packages.join(", ")} with ${packageManager}...`.yellow
+    )
     execSync(`${installCmd} ${packages.join(" ")}`, { stdio: "inherit" })
   } catch (err) {
-    console.error(`Failed to install ${packages.join(", ")}:`, err.message)
+    console.error(
+      `Failed to install ${packages.join(", ")}:`.red.bold,
+      err.message
+    )
     process.exit(1)
   }
 }
@@ -44,14 +49,13 @@ export const validateReactProject = () => {
   if (!fs.existsSync(pkgPath)) {
     console.error(
       "Error: No package.json found. Please run in a Node.js project directory."
+        .red.bold
     )
     process.exit(1)
   }
   const pkg = fs.readJsonSync(pkgPath)
   if (!pkg.dependencies?.react) {
-    console.error(
-      "Error: This does not appear to be a React project (react not found in dependencies)."
-    )
+    console.error("Error: This does not appear to be a React project.".red.bold)
     process.exit(1)
   }
 }
@@ -61,6 +65,6 @@ export const backupFile = (filePath, fileName) => {
   const backupPath = path.join(process.cwd(), "src", "bak", `${fileName}.bak`)
   if (fs.existsSync(filePath)) {
     fs.copyFileSync(filePath, backupPath)
-    console.log(`Created backup: ${backupPath}`)
+    console.log(`Created backup: ${backupPath}`.green)
   }
 }
