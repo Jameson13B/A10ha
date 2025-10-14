@@ -1,0 +1,45 @@
+{
+  "name": "a10ha",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A CLI tool to easily bootstrap and add popular tools to React projects (Firebase, React Router, and more)",
+  "bin": {
+    "a10ha": "./a10ha.js"
+  },
+  "files": [
+    "a10ha.js",
+    "templates/"
+  ],
+  "keywords": [
+    "react",
+    "cli",
+    "firebase",
+    "react-router",
+    "vite",
+    "scaffold",
+    "boilerplate",
+    "atomic10"
+  ],
+  "author": "Jameson13B",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jameson13B/A10ha.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jameson13B/A10ha/issues"
+  },
+  "homepage": "https://github.com/Jameson13B/A10ha#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^14.0.1",
+    "fs-extra": "^11.3.2",
+    "inquirer": "^12.9.6",
+    "jscodeshift": "^17.3.0",
+    "recast": "^0.23.11"
+  },
+  "language": "TypeScript"
+}
