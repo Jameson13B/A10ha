@@ -18,6 +18,10 @@ import { initApp } from "./templates/init.js"
 import { supportedTools, comingSoonTools } from "./templates/consts.js"
 import { writeFirebaseFiles } from "./templates/firebase.js"
 import {
+  writeHelloFunctionFile,
+  modifyViteConfig,
+} from "./templates/netlify.js"
+import {
   addImports,
   addHomeAndAboutComponents,
   modifyAppComponent,
@@ -114,9 +118,7 @@ const addFirebase = async () => {
 
   if (fs.existsSync(firebaseFilePath)) {
     backupFile(firebaseFilePath, fileName)
-    console.log(
-      "Firebase exists. Skipped creation, but updated dependencies.".yellow
-    )
+    console.log("Firebase exists. Skipping creation.".yellow)
   } else {
     writeFirebaseFiles(firebaseFilePath, features)
 
@@ -183,6 +185,54 @@ const addReactRouter = async () => {
   console.log(`Updated src/App.${fileName} with react-router example.`.green)
 }
 
+// Add netlify-functions setup
+const addNetlifyFunctions = async () => {
+  // 1. Validate this is a react project
+  validateReactProject()
+
+  const language = getProjectLanguage()
+
+  // 2. Install the necessary packages
+  installPackages(["@netlify/vite-plugin"])
+
+  if (language === "TypeScript") {
+    installPackages(["@netlify/functions"])
+  }
+  console.log("Netlify functions installed!".green)
+
+  // 3. Modify the hello function file then write the modified AST back
+  const helloFileName = language === "TypeScript" ? "hello.ts" : "hello.js"
+  const helloFunctionFilePath = join(
+    process.cwd(),
+    "netlify",
+    "functions",
+    `${helloFileName}`
+  )
+  const source = fs.readFileSync(helloFunctionFilePath, "utf8")
+  const ast = j(source, { parser: babelParser })
+
+  writeHelloFunctionFile(ast)
+  fs.writeFileSync(
+    helloFunctionFilePath,
+    ast.toSource({ quote: "single", tabWidth: 2 })
+  )
+
+  // 4. Modify the vite.config file
+  const viteConfigFilePath = join(process.cwd(), "vite.config.ts")
+  const viteConfigSource = fs.readFileSync(viteConfigFilePath, "utf8")
+  const viteConfigAst = j(viteConfigSource, { parser: babelParser })
+  modifyViteConfig(viteConfigAst)
+  fs.writeFileSync(
+    viteConfigFilePath,
+    viteConfigAst.toSource({ quote: "single", tabWidth: 2 })
+  )
+  console.log(
+    `Created your first function: netlify/functions/${
+      language === "TypeScript" ? "hello.ts" : "hello.js"
+    }.`.green
+  )
+}
+
 // CLI setup with commander.js
 program.version("1.0.0").description(
   `A CLI tool to easily add tools to React projects\n
@@ -218,6 +268,9 @@ program
         break
       case "react-router":
         await addReactRouter()
+        break
+      case "netlify-functions":
+        await addNetlifyFunctions()
         break
       default:
         console.log(

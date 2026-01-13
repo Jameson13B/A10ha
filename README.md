@@ -56,6 +56,12 @@ a10ha add react-router
 ```
 Adds React Router DOM to your project with optional example routing setup.
 
+**Functions**
+```bash
+a10ha add functions
+```
+Adds serverless functions to your project with a basic hello function.
+
 ## Requirements
 
 - Node.js >= 18.0.0
