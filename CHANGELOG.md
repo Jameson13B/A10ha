@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2024-12-XX
+## [1.1.1] - 2026-01-13
+
+### Changed
+- Updated README with more detailed guides and contributors section
+
+
+## [1.1.0] - 2026-01-11
 
 ### Added
 - Netlify functions support with `a10ha add netlify-functions` command
@@ -16,13 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated README with Netlify functions documentation
 
-## [1.0.1] - 2024-09-XX
+## [1.0.1] - 2025-10-13
 
 ### Changed
 - Enhanced error and log messages in global.js
 - Improved user feedback throughout the CLI
 
-## [1.0.0] - 2024-09-XX
+## [1.0.0] - 2025-10-13
 
 ### Added
 - Initial release of A10ha CLI tool
