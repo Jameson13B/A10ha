@@ -233,6 +233,43 @@ const addNetlifyFunctions = async () => {
   )
 }
 
+// Add back4app setup
+const addBack4App = async () => {
+  // 1. Validate this is a react project
+  validateReactProject()
+
+  // 2. Install the necessary packages
+  installPackages(["parse"])
+
+  console.log("Back4App installed!".green)
+
+  // 3. Modify the .env file
+  const envFilePath = join(process.cwd(), ".env")
+  const envFile = fs.readFileSync(envFilePath, "utf8")
+  const envFileAst = j(envFile, { parser: babelParser })
+
+  writeBack4AppFiles(envFileAst)
+  fs.writeFileSync(
+    envFilePath,
+    envFileAst.toSource({ quote: "single", tabWidth: 2 })
+  )
+  console.log("Modified .env file with Back4App credentials.".green)
+
+  // 4. Modify App file with Back4App initialization
+  const language = getProjectLanguage()
+  const fileName = language === "TypeScript" ? "App.tsx" : "App.jsx"
+  const appFilePath = join(process.cwd(), "src", `${fileName}`)
+  const appFile = fs.readFileSync(appFilePath, "utf8")
+  const appFileAst = j(appFile, { parser: babelParser })
+
+  modifyBack4AppInit(appFileAst)
+  fs.writeFileSync(
+    appFilePath,
+    appFileAst.toSource({ quote: "single", tabWidth: 2 })
+  )
+  console.log("Modified App.js file with Back4App initialization.".green)
+}
+
 // CLI setup with commander.js
 program.version("1.0.0").description(
   `A CLI tool to easily add tools to React projects\n
@@ -271,6 +308,9 @@ program
         break
       case "netlify-functions":
         await addNetlifyFunctions()
+        break
+      case "back4app":
+        await addBack4App()
         break
       default:
         console.log(

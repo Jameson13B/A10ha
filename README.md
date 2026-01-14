@@ -20,6 +20,7 @@
   - [Firebase](https://github.com/Jameson13B/A10ha/wiki/Adding-Tools#supported-tools)
   - [React Router](https://github.com/Jameson13B/A10ha/wiki/Adding-Tools#supported-tools)
   - [Netlify Functions](https://github.com/Jameson13B/A10ha/wiki/Adding-Tools#supported-tools)
+  - [Back4App](https://github.com/Jameson13B/A10ha/wiki/Adding-Tools#supported-tools)
 
 ## Installation
 
@@ -64,6 +65,7 @@ a10ha add <tool>
 | **Firebase** | *Pick from: Firestore, Authentication, and/or Storage* | `a10ha add firebase` |
 | **React Router** | *With optional example routing setup.* | `a10ha add react-router` |
 | **Netlify Functions** | *With a basic starter hello function.* | `a10ha add netlify-functions` |
+| **Back4App** | *With a basic starter Back4App setup.* | `a10ha add back4app` |
 
 ## Requirements
 

@@ -1,6 +1,6 @@
 {
   "name": "a10ha",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "type": "module",
   "description": "A CLI tool to easily bootstrap and add popular tools to React projects (Firebase, React Router, and more)",
   "bin": {
