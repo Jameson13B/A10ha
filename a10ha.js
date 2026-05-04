@@ -26,6 +26,7 @@ import {
   addHomeAndAboutComponents,
   modifyAppComponent,
 } from "./templates/reactRouter.js"
+import { writeLayoutFiles } from "./templates/layout.js"
 
 // Initialize a new React project
 const initProject = async () => {
@@ -55,7 +56,7 @@ const initProject = async () => {
   try {
     console.log("A10ha by Atomic10 Studio".green.bold)
     console.log(
-      `Creating new ${language} React project "${projectName}"...`.yellow
+      `Creating new ${language} React project "${projectName}"...`.yellow,
     )
 
     execSync(
@@ -69,7 +70,7 @@ const initProject = async () => {
           language === "TypeScript" ? "--template react-ts" : "--template react"
         }`,
       }[packageManager],
-      { stdio: "inherit" }
+      { stdio: "inherit" },
     )
 
     // Set the project language in package.json
@@ -104,7 +105,7 @@ const addFirebase = async () => {
 
   if (features.length === 0) {
     console.log(
-      "No Firebase features selected. Skipping Firebase setup.".yellow
+      "No Firebase features selected. Skipping Firebase setup.".yellow,
     )
     return
   }
@@ -125,7 +126,7 @@ const addFirebase = async () => {
     console.log(
       `Created src/${
         language === "TypeScript" ? "firebase.ts" : "firebase.js"
-      }. Update the .env file with your Firebase project details.`.green
+      }. Update the .env file with your Firebase project details.`.green,
     )
   }
 }
@@ -206,7 +207,7 @@ const addNetlifyFunctions = async () => {
     process.cwd(),
     "netlify",
     "functions",
-    `${helloFileName}`
+    `${helloFileName}`,
   )
   const source = fs.readFileSync(helloFunctionFilePath, "utf8")
   const ast = j(source, { parser: babelParser })
@@ -214,7 +215,7 @@ const addNetlifyFunctions = async () => {
   writeHelloFunctionFile(ast)
   fs.writeFileSync(
     helloFunctionFilePath,
-    ast.toSource({ quote: "single", tabWidth: 2 })
+    ast.toSource({ quote: "single", tabWidth: 2 }),
   )
 
   // 4. Modify the vite.config file
@@ -224,12 +225,12 @@ const addNetlifyFunctions = async () => {
   modifyViteConfig(viteConfigAst)
   fs.writeFileSync(
     viteConfigFilePath,
-    viteConfigAst.toSource({ quote: "single", tabWidth: 2 })
+    viteConfigAst.toSource({ quote: "single", tabWidth: 2 }),
   )
   console.log(
     `Created your first function: netlify/functions/${
       language === "TypeScript" ? "hello.ts" : "hello.js"
-    }.`.green
+    }.`.green,
   )
 }
 
@@ -251,7 +252,7 @@ const addBack4App = async () => {
   writeBack4AppFiles(envFileAst)
   fs.writeFileSync(
     envFilePath,
-    envFileAst.toSource({ quote: "single", tabWidth: 2 })
+    envFileAst.toSource({ quote: "single", tabWidth: 2 }),
   )
   console.log("Modified .env file with Back4App credentials.".green)
 
@@ -265,16 +266,34 @@ const addBack4App = async () => {
   modifyBack4AppInit(appFileAst)
   fs.writeFileSync(
     appFilePath,
-    appFileAst.toSource({ quote: "single", tabWidth: 2 })
+    appFileAst.toSource({ quote: "single", tabWidth: 2 }),
   )
   console.log("Modified App.js file with Back4App initialization.".green)
+}
+
+// Add layout setup
+const addLayout = async () => {
+  // validateReactProject()
+  installPackages(["antd"])
+  console.log("Layout deps installed!\n".green)
+
+  const language = getProjectLanguage()
+  const fileName = language === "TypeScript" ? "layout.tsx" : "layout.jsx"
+  const layoutFilePath = join(process.cwd(), "src", `${fileName}`)
+
+  writeLayoutFiles(layoutFilePath)
+
+  console.log(
+    `Sucessfully created src/${fileName}.\n
+  Layout, Divider, Flex, and Space components are ready to use.\n`.green,
+  )
 }
 
 // CLI setup with commander.js
 program.version("1.0.0").description(
   `A CLI tool to easily add tools to React projects\n
 Supported tools:\n  - ${supportedTools.join("\n  - ")}\n
-Coming soon:\n  - ${comingSoonTools.join("\n  - ")}`
+Coming soon:\n  - ${comingSoonTools.join("\n  - ")}`,
 )
 
 program
@@ -312,10 +331,13 @@ program
       case "back4app":
         await addBack4App()
         break
+      case "layout":
+        await addLayout()
+        break
       default:
         console.log(
           `Unknown tool: ${tool}. Supported tools: ${supportedTools.join(", ")}`
-            .red.bold
+            .red.bold,
         )
         process.exit(1)
     }

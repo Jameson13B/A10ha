@@ -2,8 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.3.0] - 2026-05-03
+
+### Added
+- Layout component support with `a10ha add layout` command
+- Automatic Layout, Divider, Flex, and Space component creation in src/layout.{tsx/jsx}
 
 ## [1.2.0] - 2026-01-13
 
@@ -52,6 +57,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project validation to ensure React project structure
 - Support for Node.js >= 22.0.0
 
+[1.3.0]: https://github.com/Jameson13B/A10ha/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/Jameson13B/A10ha/compare/v1.1.1...v1.2.0
+[1.1.1]: https://github.com/Jameson13B/A10ha/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/Jameson13B/A10ha/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/Jameson13B/A10ha/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Jameson13B/A10ha/releases/tag/v1.0.0
