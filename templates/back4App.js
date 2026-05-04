@@ -56,3 +56,12 @@ export const modifyBack4AppInit = (ast) => {
       )
   }
 }
+
+import Parse from "parse/dist/parse.min.js"
+
+export const DB = {
+  add: (object) => new Parse.Object(object),
+  get: (object, id) => new Parse.Query(object).get(id),
+  list: (object, id) => new Parse.Query(object),
+  find: (object, key, value) => new Parse.Query(object).equalTo(key, value),
+}
